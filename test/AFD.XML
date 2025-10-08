@@ -1,0 +1,96 @@
+<AFD>
+
+   <simbolos>
+       <elemento valor= "0"/>
+       <elemento valor= "1"/>
+       <elemento valor= "2"/>
+       <elemento valor= "3"/>
+       <elemento valor= "4"/>
+       <elemento valor= "5"/>
+       <elemento valor= "6"/>
+       <elemento valor= "7"/>
+       <elemento valor= "8"/>
+       <elemento valor= "9"/>
+       <elemento valor= "."/>
+       <elemento valor= " "/>
+       <elemento valor= "\n"/>
+   </simbolos>
+
+   <estados>
+       <elemento valor= "1"/>
+       <elemento valor= "2"/>
+       <elemento valor= "3"/>
+       <elemento valor= "4"/>
+       <elemento valor= "5"/>
+       <elemento valor= "F"/>
+   </estados>
+
+   <estadosFinais>
+       <elemento valor="F"/>
+   </estadosFinais>
+
+   <funcaoPrograma>
+       <elemento origem="1"  destino="5" simbolo="1"/>
+       <elemento origem="1"  destino="5" simbolo="2"/>
+       <elemento origem="1"  destino="5" simbolo="3"/>
+       <elemento origem="1"  destino="5" simbolo="4"/>
+       <elemento origem="1"  destino="5" simbolo="5"/>
+       <elemento origem="1"  destino="5" simbolo="6"/>
+       <elemento origem="1"  destino="5" simbolo="7"/>
+       <elemento origem="1"  destino="5" simbolo="8"/>
+       <elemento origem="1"  destino="5" simbolo="9"/>
+       
+       <elemento origem="1"  destino="2" simbolo="0"/>
+       
+       <elemento origem="2"  destino="3" simbolo="."/>
+       
+       <elemento origem="5"  destino="3" simbolo="."/>
+       
+       <elemento origem="5"  destino="5" simbolo="1"/>
+       <elemento origem="5"  destino="5" simbolo="2"/>
+       <elemento origem="5"  destino="5" simbolo="3"/>
+       <elemento origem="5"  destino="5" simbolo="4"/>
+       <elemento origem="5"  destino="5" simbolo="5"/>
+       <elemento origem="5"  destino="5" simbolo="6"/>
+       <elemento origem="5"  destino="5" simbolo="7"/>
+       <elemento origem="5"  destino="5" simbolo="8"/>
+       <elemento origem="5"  destino="5" simbolo="9"/>
+       <elemento origem="5"  destino="5" simbolo="0"/>
+       
+       <elemento origem="4"  destino="4" simbolo="1"/>
+       <elemento origem="4"  destino="4" simbolo="2"/>
+       <elemento origem="4"  destino="4" simbolo="3"/>
+       <elemento origem="4"  destino="4" simbolo="4"/>
+       <elemento origem="4"  destino="4" simbolo="5"/>
+       <elemento origem="4"  destino="4" simbolo="6"/>
+       <elemento origem="4"  destino="4" simbolo="7"/>
+       <elemento origem="4"  destino="4" simbolo="8"/>
+       <elemento origem="4"  destino="4" simbolo="9"/>
+       <elemento origem="4"  destino="4" simbolo="0"/>
+       
+       <elemento origem="3"  destino="4" simbolo="1"/>
+       <elemento origem="3"  destino="4" simbolo="2"/>
+       <elemento origem="3"  destino="4" simbolo="3"/>
+       <elemento origem="3"  destino="4" simbolo="4"/>
+       <elemento origem="3"  destino="4" simbolo="5"/>
+       <elemento origem="3"  destino="4" simbolo="6"/>
+       <elemento origem="3"  destino="4" simbolo="7"/>
+       <elemento origem="3"  destino="4" simbolo="8"/>
+       <elemento origem="3"  destino="4" simbolo="9"/>
+       <elemento origem="3"  destino="4" simbolo="0"/>
+       
+       <elemento origem="4"  destino="F" simbolo=" "/>
+       <elemento origem="4"  destino="F" simbolo="\n"/>
+
+       
+       <elemento origem="2"  destino="F" simbolo=" "/>
+       <elemento origem="2"  destino="F" simbolo="\n"/>
+
+       <elemento origem="5"  destino="F" simbolo=" "/>
+       <elemento origem="5"  destino="F" simbolo="\n"/>
+
+   </funcaoPrograma>
+
+   <estadoInicial valor= "1"/>
+
+</AFD>
