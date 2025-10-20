@@ -204,7 +204,34 @@ public class AFD {
 		NodeList nl3 = elem.getElementsByTagName("funcaoPrograma");
 		NodeList nl4 = elem.getElementsByTagName("estadoInicial");
 
+		//Leitura Símbolos
+		Element simbolosElem = (Element) nl0.item(0);
+		NodeList bloco = simbolosElem.getElementsByTagName("bloco");
+
+		for(int i = 0; i < bloco.getLength(); i++) {
+			Element blocoElem = (Element) bloco.item(i);
+			String valor = blocoElem.getAttribute("valor").trim();
+			String [] partes = valor.split(",");
+
+			for (String p : partes) {
+				p = p.trim();
+
+				if (p.length() == 3 && p.charAt(1) == '-') {
+					char inicio = p.charAt(0);
+					char fim = p.charAt(2);
+					for (char c = inicio; c <= fim; c++) {
+						simbolos.inclui(new Simbolo(c));
+					}
+				}
+				else if (!p.isEmpty()) {
+					simbolos.inclui(new Simbolo(p.charAt(0)));
+				}
+			}
+		}
+
 		getChildTagValue(0, (Element) nl0.item(0), "elemento");
+
+
 		getChildTagValue(1, (Element) nl1.item(0), "elemento");
 		getChildTagValue(2, (Element) nl2.item(0), "elemento");
 		Element eI = (Element) nl4.item(0);

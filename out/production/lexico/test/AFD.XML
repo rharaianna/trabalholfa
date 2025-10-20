@@ -1,16 +1,8 @@
 <AFD>
 
    <simbolos>
-       <elemento valor= "0"/>
-       <elemento valor= "1"/>
-       <elemento valor= "2"/>
-       <elemento valor= "3"/>
-       <elemento valor= "4"/>
-       <elemento valor= "5"/>
-       <elemento valor= "6"/>
-       <elemento valor= "7"/>
-       <elemento valor= "8"/>
-       <elemento valor= "9"/>
+       <bloco valor="0-9"/>
+       <bloco valor="a-z"/>
        <elemento valor= "."/>
        <elemento valor= " "/>
        <elemento valor= "\n"/>
