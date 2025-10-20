@@ -247,12 +247,18 @@ public class AFD {
 			for (int i = 0; i < children.getLength(); i++) {
 				Element child = (Element) children.item(i);
 				if (child != null) {
-					transD.setOrigem(new Estado(child.getAttribute("origem")));
-					transD.setDestino(new Estado(child.getAttribute("destino")));
-					char[] c = child.getAttribute("simbolo").toCharArray();
-					transD.setSimbolo(new Simbolo(c[0]));
-                                        //int a =  Integer.parseInt(child.getAttribute("acao"));                                       
-					funcaoPrograma.inclui(transD);
+					String origem = child.getAttribute("origem");
+					String destino = child.getAttribute("destino");
+					String simbolos = child.getAttribute("simbolo");
+
+					String[] simbolosArray = simbolos.split(",");
+					for(String s: simbolosArray) {
+						transD.setOrigem(new Estado(origem));
+						transD.setDestino(new Estado(destino));
+						transD.setSimbolo(new Simbolo(s.charAt(0)));
+						//int a =  Integer.parseInt(child.getAttribute("acao"));
+						funcaoPrograma.inclui(transD);
+					}
 				}
 			}
 		}
