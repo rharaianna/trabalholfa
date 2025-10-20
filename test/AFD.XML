@@ -2,9 +2,9 @@
 
    <simbolos>
        <bloco valor="0-9"/>
-       <elemento valor= "."/>
-       <elemento valor= " "/>
-       <elemento valor= "\n"/>
+       <bloco valor= "., ,\n"/>
+       <elemento valor="#"/>
+
    </simbolos>
 
    <estados>

@@ -204,8 +204,21 @@ public class AFD {
 		NodeList nl3 = elem.getElementsByTagName("funcaoPrograma");
 		NodeList nl4 = elem.getElementsByTagName("estadoInicial");
 
-		//Leitura Símbolos
-		Element simbolosElem = (Element) nl0.item(0);
+		//Leitura Símbolos - Inicio
+		lerBlocoSimbolos((Element) nl0.item(0));
+		getChildTagValue(0, (Element) nl0.item(0), "elemento");
+
+		getChildTagValue(1, (Element) nl1.item(0), "elemento");
+
+		getChildTagValue(2, (Element) nl2.item(0), "elemento");
+		Element eI = (Element) nl4.item(0);
+		estadoInicial = new Estado(eI.getAttribute("valor"));
+
+		getChildTagValue((Element) nl3.item(0), "elemento");
+
+	}
+
+	private void lerBlocoSimbolos(Element simbolosElem) throws Exception {
 		NodeList bloco = simbolosElem.getElementsByTagName("bloco");
 
 		for(int i = 0; i < bloco.getLength(); i++) {
@@ -214,6 +227,12 @@ public class AFD {
 			String [] partes = valor.split(",");
 
 			for (String p : partes) {
+
+				if(p.equals(" ")){
+					simbolos.inclui(new Simbolo(p.charAt(0)));
+					continue;
+				}
+
 				p = p.trim();
 
 				if (p.length() == 3 && p.charAt(1) == '-') {
@@ -229,17 +248,10 @@ public class AFD {
 			}
 		}
 
-		getChildTagValue(0, (Element) nl0.item(0), "elemento");
-
-
-		getChildTagValue(1, (Element) nl1.item(0), "elemento");
-		getChildTagValue(2, (Element) nl2.item(0), "elemento");
-		Element eI = (Element) nl4.item(0);
-		estadoInicial = new Estado(eI.getAttribute("valor"));
-
-		getChildTagValue((Element) nl3.item(0), "elemento");
-
 	}
+
+
+
 	private void getChildTagValue(int tipo, Element elem, String tagName)
 			throws Exception {
 		NodeList children = elem.getElementsByTagName(tagName);
