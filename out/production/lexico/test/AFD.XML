@@ -8,6 +8,7 @@
    </simbolos>
 
    <estados>
+       <bloco valor="6-9"/>
        <elemento valor= "1"/>
        <elemento valor= "2"/>
        <elemento valor= "3"/>

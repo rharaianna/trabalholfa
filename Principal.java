@@ -49,7 +49,6 @@ public class Principal {
         if (automato.getEstadosFinais().pertence(corrente)) {
             return "fim";
         }
-
         Simbolo p = proximo(r);
         while (p != null) {
             token += p.toString();

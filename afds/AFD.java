@@ -204,8 +204,12 @@ public class AFD {
 		NodeList nl3 = elem.getElementsByTagName("funcaoPrograma");
 		NodeList nl4 = elem.getElementsByTagName("estadoInicial");
 
+		//Leitura Símbolos - Inicio
+		lerBlocoSimbolos((Element) nl0.item(0));
 		getChildTagValue(0, (Element) nl0.item(0), "elemento");
+
 		getChildTagValue(1, (Element) nl1.item(0), "elemento");
+
 		getChildTagValue(2, (Element) nl2.item(0), "elemento");
 		Element eI = (Element) nl4.item(0);
 		estadoInicial = new Estado(eI.getAttribute("valor"));
@@ -213,6 +217,41 @@ public class AFD {
 		getChildTagValue((Element) nl3.item(0), "elemento");
 
 	}
+
+	private void lerBlocoSimbolos(Element simbolosElem) throws Exception {
+		NodeList bloco = simbolosElem.getElementsByTagName("bloco");
+
+		for(int i = 0; i < bloco.getLength(); i++) {
+			Element blocoElem = (Element) bloco.item(i);
+			String valor = blocoElem.getAttribute("valor").trim();
+			String [] partes = valor.split(",");
+
+			for (String p : partes) {
+
+				if(p.equals(" ")){
+					simbolos.inclui(new Simbolo(p.charAt(0)));
+					continue;
+				}
+
+				p = p.trim();
+
+				if (p.length() == 3 && p.charAt(1) == '-') {
+					char inicio = p.charAt(0);
+					char fim = p.charAt(2);
+					for (char c = inicio; c <= fim; c++) {
+						simbolos.inclui(new Simbolo(c));
+					}
+				}
+				else if (!p.isEmpty()) {
+					simbolos.inclui(new Simbolo(p.charAt(0)));
+				}
+			}
+		}
+
+	}
+
+
+
 	private void getChildTagValue(int tipo, Element elem, String tagName)
 			throws Exception {
 		NodeList children = elem.getElementsByTagName(tagName);
@@ -247,12 +286,18 @@ public class AFD {
 			for (int i = 0; i < children.getLength(); i++) {
 				Element child = (Element) children.item(i);
 				if (child != null) {
-					transD.setOrigem(new Estado(child.getAttribute("origem")));
-					transD.setDestino(new Estado(child.getAttribute("destino")));
-					char[] c = child.getAttribute("simbolo").toCharArray();
-					transD.setSimbolo(new Simbolo(c[0]));
-                                        //int a =  Integer.parseInt(child.getAttribute("acao"));                                       
-					funcaoPrograma.inclui(transD);
+					String origem = child.getAttribute("origem");
+					String destino = child.getAttribute("destino");
+					String simbolos = child.getAttribute("simbolo");
+
+					String[] simbolosArray = simbolos.split(",");
+					for(String s: simbolosArray) {
+						transD.setOrigem(new Estado(origem));
+						transD.setDestino(new Estado(destino));
+						transD.setSimbolo(new Simbolo(s.charAt(0)));
+						//int a =  Integer.parseInt(child.getAttribute("acao"));
+						funcaoPrograma.inclui(transD);
+					}
 				}
 			}
 		}
