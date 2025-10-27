@@ -16,7 +16,7 @@ public class Principal {
     public String token;
 
     public Principal() throws Exception {
-        automato.ler("./test/AFD.XML");
+        automato.ler("test/AFD.XML");
     }
 
     public static void main(String[] args) {
@@ -40,7 +40,6 @@ public class Principal {
         return null; // fim do arquivo
     }
 
-
     // Le um token retona 1: se sucesso e 0: se erro -1 se fim
     @SuppressWarnings("empty-statement")
     public String lexico(BufferedReader r) throws IOException {
@@ -54,11 +53,10 @@ public class Principal {
             token += p.toString();
             corrente = automato.p(corrente, p);
             if (corrente == null) {
-                if (proximo(r)==null){
+                if (proximo(r) == null) {
                     return "erro lexico e não acabou do jeito certo";
-                }
-                else{
-                return "erro lexico"; // erro lexico
+                } else {
+                    return "erro lexico"; // erro lexico
                 }
             }
             if (automato.getEstadosFinais().pertence(corrente)) {
@@ -72,13 +70,13 @@ public class Principal {
     // chama lexico até chegar no final de arquivo ou erro léxico
     public void inicio() {
         System.out.println(("AFD M' = " + automato.toString()));
-        // Loop de leitura de tokens  
+        // Loop de leitura de tokens
         try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
             String achou = lexico(reader);
             while (!achou.equals("fim") && !achou.equals("automato não finalizado")) {
                 System.out.println("Essa palavra está no automato: " + achou);
                 achou = lexico(reader);
-                //Ele tá ignorando a ultima palavra se não acabar em " " ou /n
+                // Ele tá ignorando a ultima palavra se não acabar em " " ou /n
             }
             System.out.println(achou);
         } catch (FileNotFoundException ex) {
