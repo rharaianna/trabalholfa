@@ -286,8 +286,9 @@ public class AFD {
 							estados.inclui(new Estado(child.getAttribute("valor")));
 							break;
 						case 2:
-							estadosFinais.inclui(new Estado(child
-									.getAttribute("valor")));
+							estadosFinais.inclui(
+									new EstadoFinal(child.getAttribute("valor"),
+											child.getAttribute("significado")));
 							break;
 					}
 				}

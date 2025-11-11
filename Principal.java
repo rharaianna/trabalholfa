@@ -60,6 +60,9 @@ public class Principal {
                 }
             }
             if (automato.getEstadosFinais().pertence(corrente)) {
+                // TODO: Essa não é a forma correta, já que a string token não deve ter
+                // significado. Mas funciona!
+                token += " (significado: " + ((EstadoFinal) corrente).getSignificado() + ")";
                 return token;
             }
             p = proximo(r);
