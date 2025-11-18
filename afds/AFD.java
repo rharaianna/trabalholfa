@@ -248,11 +248,6 @@ public class AFD {
 			p = p.trim();
 			if (p.isEmpty()) continue;
 
-			if (p.equals(" ")) { // caso especial do espaço
-				lista.add(' ');
-				continue;
-			}
-
 			if (p.length() == 3 && p.charAt(1) == '-') {
 				char inicio = p.charAt(0);
 				char fim = p.charAt(2);

@@ -21,7 +21,7 @@
 
    <funcaoPrograma>
         <elemento origem="1">
-            <destino destino="F" simbolo="1-9"/>
+            <destino destino="F" simbolo="1-9, "/>
         </elemento>
 
        <elemento origem="2">
