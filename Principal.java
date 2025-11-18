@@ -45,6 +45,7 @@ public class Principal {
     public String lexico(BufferedReader r) throws IOException {
         String token = "";
         corrente = automato.getEstadoInicial();
+        System.out.println("o: " + corrente);
         if (automato.getEstadosFinais().pertence(corrente)) {
             return "fim";
         }
@@ -53,11 +54,7 @@ public class Principal {
             token += p.toString();
             corrente = automato.p(corrente, p);
             if (corrente == null) {
-                if (proximo(r) == null) {
-                    return "erro lexico e não acabou do jeito certo";
-                } else {
-                    return "erro lexico"; // erro lexico
-                }
+                return "erro lexico,fim";
             }
             if (automato.getEstadosFinais().pertence(corrente)) {
                 return token;
@@ -73,7 +70,7 @@ public class Principal {
         // Loop de leitura de tokens
         try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
             String achou = lexico(reader);
-            while (!achou.equals("fim") && !achou.equals("automato não finalizado")) {
+            while (!achou.equals("fim") && !achou.equals("erro lexico,fim")) {
                 System.out.println("Essa palavra está no automato: " + achou);
                 achou = lexico(reader);
                 // Ele tá ignorando a ultima palavra se não acabar em " " ou /n
