@@ -9,7 +9,9 @@ package afds;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -237,36 +239,65 @@ public class AFD {
 
 	}
 
+	private List<Character> expandirSimbolos(String simbolosStr) {
+		List<Character> lista = new ArrayList<>();
+
+		String[] partes = simbolosStr.split(",");
+
+		for (String p : partes) {
+			p = p.trim();
+			if (p.isEmpty()) continue;
+
+			if (p.equals(" ")) { // caso especial do espaço
+				lista.add(' ');
+				continue;
+			}
+
+			if (p.length() == 3 && p.charAt(1) == '-') {
+				char inicio = p.charAt(0);
+				char fim = p.charAt(2);
+
+				for (char c = inicio; c <= fim; c++) {
+					lista.add(c);
+				}
+			} else {
+				lista.add(p.charAt(0));
+			}
+		}
+
+		return lista;
+	}
+
+
 	private void lerBlocoSimbolos(Element simbolosElem) throws Exception {
 		NodeList bloco = simbolosElem.getElementsByTagName("bloco");
 
 		for (int i = 0; i < bloco.getLength(); i++) {
 			Element blocoElem = (Element) bloco.item(i);
-			String valor = blocoElem.getAttribute("valor").trim();
-			String[] partes = valor.split(",");
 
-			for (String p : partes) {
+			List<Character> lista = expandirSimbolos(blocoElem.getAttribute("valor"));
 
-				if (p.equals(" ")) {
-					simbolos.inclui(new Simbolo(p.charAt(0)));
-					continue;
-				}
-
-				p = p.trim();
-
-				if (p.length() == 3 && p.charAt(1) == '-') {
-					char inicio = p.charAt(0);
-					char fim = p.charAt(2);
-					for (char c = inicio; c <= fim; c++) {
-						simbolos.inclui(new Simbolo(c));
-					}
-				} else if (!p.isEmpty()) {
-					simbolos.inclui(new Simbolo(p.charAt(0)));
-				}
+			for (char c : lista) {
+				simbolos.inclui(new Simbolo(c));
 			}
 		}
-
 	}
+
+	private void adicionaTransicoes(String origem, String destino, String simbolosStr)
+			throws Exception {
+
+		List<Character> lista = expandirSimbolos(simbolosStr);
+
+		for (char c : lista) {
+			TransicaoD nova = new TransicaoD();
+			nova.setOrigem(new Estado(origem));
+			nova.setDestino(new Estado(destino));
+			nova.setSimbolo(new Simbolo(c));
+			funcaoPrograma.inclui(nova);
+		}
+	}
+
+
 
 	private void getChildTagValue(int tipo, Element elem, String tagName)
 			throws Exception {
@@ -310,14 +341,7 @@ public class AFD {
 						String destino = destinoElem.getAttribute("destino");
 						String simbolos = destinoElem.getAttribute("simbolo");
 
-						String[] simbolosArray = simbolos.split(",");
-						for (String s : simbolosArray) {
-							transD.setOrigem(new Estado(origem));
-							transD.setDestino(new Estado(destino));
-							transD.setSimbolo(new Simbolo(s.charAt(0)));
-							// int a = Integer.parseInt(child.getAttribute("acao"));
-							funcaoPrograma.inclui(transD);
-						}
+						adicionaTransicoes(origem, destino, simbolos);
 					}
 				}
 			}
