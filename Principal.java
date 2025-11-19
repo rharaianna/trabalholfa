@@ -29,42 +29,64 @@ public class Principal {
         }
     }
 
+
+    // O proximo agora retorna TUDO, inclusive espaços e quebras de linha.
+    // Quem decide o que fazer com eles é o analisador léxico.
     public Simbolo proximo(BufferedReader reader) throws IOException {
-        int charLido;
-        while ((charLido = reader.read()) != -1) {
-            if (charLido == 10) { // ignora quebras de linha
-                continue;
-            }
-            return new Simbolo((char) charLido);
+        int charLido = reader.read();
+
+        if (charLido == -1){
+            return null; //fim de arquivo
         }
-        return null; // fim do arquivo
+        return new Simbolo((char) charLido);
     }
 
     // Le um token retona 1: se sucesso e 0: se erro -1 se fim
-    @SuppressWarnings("empty-statement")
     public String lexico(BufferedReader r) throws IOException {
         String token = "";
         corrente = automato.getEstadoInicial();
-        if (automato.getEstadosFinais().pertence(corrente)) {
-            return "fim";
-        }
+
+        r.mark(1); // Marca a posição atual para poder voltar 1 char se precisar
         Simbolo p = proximo(r);
+
+        // 1. Pular espaços em branco/quebras de linha ANTES do token começar
         while (p != null) {
-            token += p.toString();
-            corrente = automato.p(corrente, p);
-            if (corrente == null) {
-                if (proximo(r) == null) {
-                    return "erro lexico e não acabou do jeito certo";
-                } else {
-                    return "erro lexico"; // erro lexico
-                }
+            if(p.toString().equals(" ")||p.toString().equals("\n") || p.toString().equals("\r") || p.toString().equals("\t")){
+                r.mark(1); // Marca novamente após consumir o espaço
+                p = proximo(r);
             }
-            if (automato.getEstadosFinais().pertence(corrente)) {
+            else{
+                break; // Encontrou algo que não é espaço, começa o token
+            }
+        }
+
+        if (p == null) return "fim"; // Arquivo acabou só com espaços
+        while (p != null) {
+            Estado proximoEstado = automato.p(corrente, p);
+
+            // CASO 1: Transição Inválida (null)
+            if (proximoEstado == null) {
+                // Se o caractere lido não é aceito.
+                return "erro lexico: caractere '" + p + "' inesperado em " + token;
+            }
+
+            // CASO 2: Atingiu o Estado Final (F)
+            if (automato.getEstadosFinais().pertence(proximoEstado)) {
+                // O "asterisco" diz: o token está pronto.
+                // O caractere 'p' (espaço) serviu para finalizar, mas não entra no token numérico.
                 return token;
             }
+
+            // CASO 3: Transição Válida para estado não final
+            // Consome o caractere e continua
+            token += p.toString();
+            corrente = proximoEstado;
+
+            // Prepara leitura do próximo
+            r.mark(1);
             p = proximo(r);
         }
-        return "fim";
+        return token;
     }
 
     // chama lexico até chegar no final de arquivo ou erro léxico
