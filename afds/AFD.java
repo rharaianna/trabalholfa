@@ -245,6 +245,11 @@ public class AFD {
 		String[] partes = simbolosStr.split(",");
 
 		for (String p : partes) {
+			if (p.equals(" ")) {
+				lista.add(' ');
+				continue;
+			}
+
 			p = p.trim();
 			if (p.isEmpty()) continue;
 
