@@ -1,17 +1,16 @@
 <AFD>
-
    <simbolos>
        <bloco valor="0-9"/>
-       <bloco valor= "., ,\n"/>
-       <elemento valor="#"/>
+       <elemento valor="."/>
+       <elemento valor=" "/>
    </simbolos>
 
    <estados>
-       <elemento valor= "1"/>
-       <elemento valor= "2"/>
-       <elemento valor= "3"/>
-       <elemento valor= "4"/>
-       <elemento valor= "5"/>
+       <elemento valor= "A"/>
+       <elemento valor= "B"/>
+       <elemento valor= "C"/>
+       <elemento valor= "D"/>
+       <elemento valor= "E"/>
        <elemento valor= "F"/>
    </estados>
 
@@ -19,31 +18,36 @@
        <elemento valor="F"/>
    </estadosFinais>
 
-   <funcaoPrograma>
-        <elemento origem="1">
-            <destino destino="F" simbolo="1-9, "/>
+    <funcaoPrograma>
+
+        <!-- Automato q aceita inteiros e decimais sem 0 nao significatovos -->
+        <elemento origem="A">
+            <destino destino="B" simbolo="0"/>
+            <destino destino="E" simbolo="1-9"/>
         </elemento>
 
-       <elemento origem="2">
-           <destino destino="3" simbolo="."/>
-           <destino destino="F" simbolo=" ,\n"/>
-       </elemento>
+        <elemento origem="B">
+            <destino destino="C" simbolo="."/>
+            <destino destino="F" simbolo=" "/> <!--nn sei-->
+        </elemento>
 
-       <elemento origem="3">
-           <destino destino="4" simbolo="1,2,3,4,5,6,7,8,9,0"/>
-       </elemento>
+        <elemento origem="C">
+            <destino destino="D" simbolo="0-9"/>
+        </elemento>
 
-       <elemento origem="4">
-           <destino destino="4" simbolo="1,2,3,4,5,6,7,8,9,0"/>
-           <destino destino="F" simbolo=" ,\n"/>
-       </elemento>
+        <elemento origem="D">
+            <destino destino="D" simbolo="0-9"/>
+            <destino destino="F" simbolo=" "/>
+        </elemento>
 
-       <elemento origem="5">
-           <destino destino="3" simbolo="."/>
-           <destino destino="5" simbolo="1,2,3,4,5,6,7,8,9,0"/>
-       </elemento>
-   </funcaoPrograma>
+        <elemento origem="E">
+            <destino destino="C" simbolo="."/>
+            <destino destino="E" simbolo="0-9"/>
+            <destino destino="F" simbolo=" "/>
+        </elemento>
 
-   <estadoInicial valor= "1"/>
+    </funcaoPrograma>
+
+   <estadoInicial valor= "A"/>
 
 </AFD>
