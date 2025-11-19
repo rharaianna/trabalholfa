@@ -32,8 +32,7 @@ public class AFD {
 	 * 
 	 * @param simbolos
 	 *                       ConjuntoSimbolo que representa o alfabeto do automato
-	 *                       finito
-	 *                       deterministico
+	 *                       finito deterministico
 	 * @param estados
 	 *                       ConjuntoEstados que representa o conjunto de estados do
 	 *                       automato finito deterministico
@@ -42,12 +41,10 @@ public class AFD {
 	 *                       automato finito deterministico
 	 * @param estadoInicial
 	 *                       Estado que representa o estado inicial do automato
-	 *                       finito
-	 *                       deterministico
+	 *                       finito deterministico
 	 * @param estadosFinais
 	 *                       ConjuntoEstados que representa o conjunto de estados
-	 *                       finais do
-	 *                       automato finito deterministico
+	 *                       finais do automato finito deterministico
 	 */
 	public AFD(ConjuntoSimbolo simbolos, ConjuntoEstados estados,
 			ConjuntoTransicaoD funcaoPrograma, Estado estadoInicial,
@@ -67,7 +64,7 @@ public class AFD {
 	}
 
 	/**
-	 * Obt�m o estado inicial do aut�mato finito determin�stico
+	 * Obtem o estado inicial do autamato finito deterministico
 	 * 
 	 * @return estadoInicial - Estado que representa o estado inicial do
 	 *         aut�mato finito determin�stico
@@ -77,8 +74,8 @@ public class AFD {
 	}
 
 	/**
-	 * Ajusta o estado inicial do aut�mato finito determin�stico para o valor
-	 * passado como par�metro
+	 * Ajusta o estado inicial do automato finito deterministico para o valor
+	 * passado como parametro
 	 * 
 	 * @param estadoInicial
 	 *                      um Estado a ser definido como estado inicial do aut�mato
@@ -149,18 +146,16 @@ public class AFD {
 	 * 
 	 * @param funcaoPrograma
 	 *                       um ConjuntoTransicaoD a ser definido como a fun��o
-	 *                       programa do
-	 *                       aut�mato finito determin�stico
+	 *                       programa do aut�mato finito determin�stico
 	 */
 	public void setFuncaoPrograma(ConjuntoTransicaoD funcaoPrograma) {
 		this.funcaoPrograma = funcaoPrograma.clonar();
 	}
 
 	/**
-	 * Obt�m o alfabeto do aut�mato finito determin�stico
+	 * Obtem o alfabeto do automato finito deterministico
 	 * 
-	 * @return simbolos - ConjuntoSimbolo que representa o alfabeto do aut�mato
-	 *         finito determin�stico
+	 * @return simbolos - ConjuntoSimbolo que representa o alfabeto do automato finito deterministico
 	 */
 	public ConjuntoSimbolo getSimbolos() {
 		return this.simbolos.clonar();
@@ -180,12 +175,10 @@ public class AFD {
 
 	/**
 	 * Cria e retorna uma c�pia do objeto AFD
-	 * 
 	 * @return um clone desse AFD
 	 */
 	public AFD clonar() {
-		return new AFD(simbolos, estados, funcaoPrograma, estadoInicial,
-				estadosFinais);
+		return new AFD(simbolos, estados, funcaoPrograma, estadoInicial, estadosFinais);
 	}
 
 	public String toString() {
@@ -289,6 +282,13 @@ public class AFD {
 		List<Character> lista = expandirSimbolos(simbolosStr);
 
 		for (char c : lista) {
+
+			Simbolo s = new Simbolo(c);
+
+			if (!this.simbolos.pertence(s)) {
+				throw new Exception("Erro no XML: O símbolo '" + c + "' usado na transição de " + origem + " para " + destino + " não foi declarado no alfabeto <simbolos>.");
+			}
+
 			TransicaoD nova = new TransicaoD();
 			nova.setOrigem(new Estado(origem));
 			nova.setDestino(new Estado(destino));

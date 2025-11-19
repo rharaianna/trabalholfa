@@ -62,7 +62,13 @@ public class Principal {
 
         if (p == null) return "fim"; // Arquivo acabou só com espaços
         while (p != null) {
-            Estado proximoEstado = automato.p(corrente, p);
+
+            Simbolo pParaTeste = p;
+            if (p.toString().equals("\n") || p.toString().equals("\r") || p.toString().equals("\t")) {
+                pParaTeste = new Simbolo(' ');
+            }
+
+            Estado proximoEstado = automato.p(corrente, pParaTeste);
 
             // CASO 1: Transição Inválida (null)
             if (proximoEstado == null) {

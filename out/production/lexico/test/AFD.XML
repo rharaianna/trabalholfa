@@ -28,7 +28,7 @@
 
         <elemento origem="B">
             <destino destino="C" simbolo="."/>
-            <destino destino="F" simbolo=" "/> <!--nn sei-->
+            <destino destino="F" simbolo=" "/>
         </elemento>
 
         <elemento origem="C">
