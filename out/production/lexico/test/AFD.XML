@@ -3,8 +3,9 @@
        <bloco valor="0-9"/>
        <elemento valor="."/>
        <elemento valor=" "/>
-       <delimitador valor=";"/>
    </simbolos>
+
+   <delimitador valor= ";"/>
 
    <estados>
        <elemento valor= "A"/>
@@ -16,7 +17,9 @@
    </estados>
 
    <estadosFinais>
-       <elemento valor="F"/>
+       <elemento valor="B"/>
+       <elemento valor="D"/>
+       <elemento valor="E"/>
    </estadosFinais>
 
     <funcaoPrograma>
@@ -29,7 +32,6 @@
 
         <elemento origem="B">
             <destino destino="C" simbolo="."/>
-            <destino destino="F" simbolo=" "/>
         </elemento>
 
         <elemento origem="C">
@@ -38,13 +40,11 @@
 
         <elemento origem="D">
             <destino destino="D" simbolo="0-9"/>
-            <destino destino="F" simbolo=" "/>
         </elemento>
 
         <elemento origem="E">
             <destino destino="C" simbolo="."/>
             <destino destino="E" simbolo="0-9"/>
-            <destino destino="F" simbolo=" "/>
         </elemento>
 
     </funcaoPrograma>

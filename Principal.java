@@ -15,10 +15,6 @@ public class Principal {
     public Estado corrente;
     public String token;
 
-    public Principal() throws Exception {
-        automato.ler("test/AFD.XML");
-    }
-
     public static void main(String[] args) {
         Principal t;
         try {
@@ -29,46 +25,86 @@ public class Principal {
         }
     }
 
-
-    // O proximo agora retorna TUDO, inclusive espaços e quebras de linha.
-    // Quem decide o que fazer com eles é o analisador léxico.
-    public Simbolo proximo(BufferedReader reader) throws IOException {
-        int charLido = reader.read();
-
-        if (charLido == -1){
-            return null; //fim de arquivo
-        }
-        return new Simbolo((char) charLido);
+    public Principal() throws Exception {
+        automato.ler("test/AFD.XML");
     }
+
+    public void inicio() {
+        System.out.println("AFD M' = " + automato.toString());
+        System.out.println("------------------------------------------------");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
+
+            // Primeira leitura
+            String resultado = lexico(reader);
+
+            // Enquanto não chegar no fim do arquivo
+            while (!resultado.equals("fim")) {
+
+                // Verifica se o resultado é uma mensagem de erro
+                if (resultado.startsWith("erro")) {
+                    System.err.println(resultado); // Imprime o erro
+                    break; // PARA a execução se encontrar um erro léxico
+                } else {
+                    // Se não é erro, é um token válido
+                    System.out.println("Token reconhecido: " + resultado);
+                }
+
+                // Lê o próximo
+                resultado = lexico(reader);
+            }
+
+            System.out.println("------------------------------------------------");
+            System.out.println("Análise finalizada.");
+
+        } catch (FileNotFoundException ex) {
+            System.err.println("Arquivo não encontrado: " + nomeArquivo);
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 
     // Le um token retona 1: se sucesso e 0: se erro -1 se fim
     public String lexico(BufferedReader r) throws IOException {
         String token = "";
         corrente = automato.getEstadoInicial();
+        ConjuntoSimbolo delimitadores = automato.getDelimitador();
 
         r.mark(1); // Marca a posição atual para poder voltar 1 char se precisar
         Simbolo p = proximo(r);
 
-        // 1. Pular espaços em branco/quebras de linha ANTES do token começar
+
+        // 1. Pular delimitadores iniciais
         while (p != null) {
-            if(p.toString().equals(" ")||p.toString().equals("\n") || p.toString().equals("\r") || p.toString().equals("\t")){
+            if(delimitadores.pertence(p)){
                 r.mark(1); // Marca novamente após consumir o espaço
                 p = proximo(r);
             }
             else{
-                break; // Encontrou algo que não é espaço, começa o token
+                break; // Encontrou algo que não é delimitador, começa o token
             }
         }
 
-        if (p == null) return "fim"; // Arquivo acabou só com espaços
+        if (p == null) return "fim"; // Arquivo acabou só com delimitadores //TESTAR
+
         while (p != null) {
 
-            Simbolo pParaTeste = p;
-            if (p.toString().equals("\n") || p.toString().equals("\r") || p.toString().equals("\t")) {
-                pParaTeste = new Simbolo(' ');
+            // Antes de transitar, verifica se é um delimitador
+            if (delimitadores.pertence(p)) {
+                // Encontramos um separador! O token acabou.
+
+                if (automato.getEstadosFinais().pertence(corrente)) {
+                    // Se paramos em um estado final (ex: B, D ou E), SUCESSO.
+                    r.reset(); // Devolve o delimitador para ser lido na próxima vez (ou ignorado no início)
+                    return token;
+                } else {
+                    // Se paramos no meio do caminho (ex: estado C "0."), ERRO.
+                    return "erro lexico: token incompleto ou inválido " + token;
+                }
             }
 
-            Estado proximoEstado = automato.p(corrente, pParaTeste);
+            Estado proximoEstado = automato.p(corrente, p);
 
             // CASO 1: Transição Inválida (null)
             if (proximoEstado == null) {
@@ -76,14 +112,7 @@ public class Principal {
                 return "erro lexico: caractere '" + p + "' inesperado em " + token;
             }
 
-            // CASO 2: Atingiu o Estado Final (F)
-            if (automato.getEstadosFinais().pertence(proximoEstado)) {
-                // O "asterisco" diz: o token está pronto.
-                // O caractere 'p' (espaço) serviu para finalizar, mas não entra no token numérico.
-                return token;
-            }
-
-            // CASO 3: Transição Válida para estado não final
+            // CASO 2: Transição Válida para estado não final
             // Consome o caractere e continua
             token += p.toString();
             corrente = proximoEstado;
@@ -92,25 +121,21 @@ public class Principal {
             r.mark(1);
             p = proximo(r);
         }
-        return token;
+        if (automato.getEstadosFinais().pertence(corrente)) {
+            return token;
+        }
+        return "erro lexico: fim de arquivo inesperado";
     }
 
     // chama lexico até chegar no final de arquivo ou erro léxico
-    public void inicio() {
-        System.out.println(("AFD M' = " + automato.toString()));
-        // Loop de leitura de tokens
-        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
-            String achou = lexico(reader);
-            while (!achou.equals("fim") && !achou.equals("automato não finalizado")) {
-                System.out.println("Essa palavra está no automato: " + achou);
-                achou = lexico(reader);
-                // Ele tá ignorando a ultima palavra se não acabar em " " ou /n
-            }
-            System.out.println(achou);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+
+    // O proximo agora retorna TUDO, inclusive espaços e quebras de linha.
+    // Quem decide o que fazer com eles é o analisador léxico.
+    public Simbolo proximo(BufferedReader reader) throws IOException {
+        int charLido = reader.read();
+        if (charLido == -1){
+            return null; //fim de arquivo
         }
+        return new Simbolo((char) charLido);
     }
 }

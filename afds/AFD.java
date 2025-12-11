@@ -143,58 +143,37 @@ public class AFD {
 		NodeList nl2 = elem.getElementsByTagName("estadosFinais");
 		NodeList nl3 = elem.getElementsByTagName("funcaoPrograma");
 		NodeList nl4 = elem.getElementsByTagName("estadoInicial");
+		NodeList nl5 = elem.getElementsByTagName("delimitador");
 
-		// Leitura Símbolos - Inicio
+		// Leitura Símbolos
 		lerBlocoSimbolos((Element) nl0.item(0));
-		lerDelimitadores((Element)nl0.item(0));
+
 		getChildTagValue(0, (Element) nl0.item(0), "elemento");
-
 		getChildTagValue(1, (Element) nl1.item(0), "elemento");
-
 		getChildTagValue(2, (Element) nl2.item(0), "elemento");
+		getChildTagValue((Element) nl3.item(0), "elemento");
+
+
+		//AQUI-----------------------------------------------------------------------
+
+		Element delimit = (Element) nl5.item(0);
+		String valor = delimit.getAttribute("valor");
+
+		delimitador.inclui(new Simbolo(valor.charAt(0))); // Conferir metodo inclui
+		//FIM AQUI-----------------------------------------------------------------------
+
+
 		Element eI = (Element) nl4.item(0);
 		estadoInicial = new Estado(eI.getAttribute("valor"));
 
-		getChildTagValue((Element) nl3.item(0), "elemento");
 
 	}
-
-	private List<Character> expandirSimbolos(String simbolosStr) {
-		List<Character> lista = new ArrayList<>();
-
-		String[] partes = simbolosStr.split(",");
-
-		for (String p : partes) {
-			if (p.equals(" ")) {
-				lista.add(' ');
-				continue;
-			}
-
-			p = p.trim();
-			if (p.isEmpty()) continue;
-
-			if (p.length() == 3 && p.charAt(1) == '-') {
-				char inicio = p.charAt(0);
-				char fim = p.charAt(2);
-
-				for (char c = inicio; c <= fim; c++) {
-					lista.add(c);
-				}
-			} else {
-				lista.add(p.charAt(0));
-			}
-		}
-
-		return lista;
-	}
-
 
 	private void lerBlocoSimbolos(Element simbolosElem) throws Exception {
 		NodeList bloco = simbolosElem.getElementsByTagName("bloco");
 
 		for (int i = 0; i < bloco.getLength(); i++) {
 			Element blocoElem = (Element) bloco.item(i);
-
 			List<Character> lista = expandirSimbolos(blocoElem.getAttribute("valor"));
 
 			for (char c : lista) {
@@ -202,49 +181,6 @@ public class AFD {
 			}
 		}
 	}
-
-	// -----------------------------------------------------------------------------------------
-	public void lerDelimitadores(Element delimitadoresElem) throws Exception {
-		NodeList bloco = delimitadoresElem.getElementsByTagName("delimitador");
-
-		for (int i = 0; i < bloco.getLength(); i++) {
-			Element blocoElem = (Element) bloco.item(i);
-			List<Character> lista = expandirSimbolos(blocoElem.getAttribute("valor"));
-
-			System.out.println("AAAAAAAAAAAAAA");
-
-			for (char c : lista) {
-				System.out.println(c);
-			}
-
-
-		}
-	}
-
-	//------------------------------------------------------------------------------------------
-
-	private void adicionaTransicoes(String origem, String destino, String simbolosStr)
-			throws Exception {
-
-		List<Character> lista = expandirSimbolos(simbolosStr);
-
-		for (char c : lista) {
-
-			Simbolo s = new Simbolo(c);
-
-			if (!this.simbolos.pertence(s)) {
-				throw new Exception("Erro no XML: O símbolo '" + c + "' usado na transição de " + origem + " para " + destino + " não foi declarado no alfabeto <simbolos>.");
-			}
-
-			TransicaoD nova = new TransicaoD();
-			nova.setOrigem(new Estado(origem));
-			nova.setDestino(new Estado(destino));
-			nova.setSimbolo(new Simbolo(c));
-			funcaoPrograma.inclui(nova);
-		}
-	}
-
-
 
 	private void getChildTagValue(int tipo, Element elem, String tagName)
 			throws Exception {
@@ -295,10 +231,70 @@ public class AFD {
 		}
 	}
 
+
+
+	private List<Character> expandirSimbolos(String simbolosStr) {
+		List<Character> lista = new ArrayList<>();
+
+		String[] partes = simbolosStr.split(",");
+
+		for (String p : partes) {
+			if (p.equals(" ")) {
+				lista.add(' ');
+				continue;
+			}
+
+			p = p.trim();
+			if (p.isEmpty()) continue;
+
+			if (p.length() == 3 && p.charAt(1) == '-') {
+				char inicio = p.charAt(0);
+				char fim = p.charAt(2);
+
+				for (char c = inicio; c <= fim; c++) {
+					lista.add(c);
+				}
+			} else {
+				lista.add(p.charAt(0));
+			}
+		}
+
+		return lista;
+	}
+
+
+
+	private void adicionaTransicoes(String origem, String destino, String simbolosStr)
+			throws Exception {
+
+		List<Character> lista = expandirSimbolos(simbolosStr);
+
+		for (char c : lista) {
+
+			Simbolo s = new Simbolo(c);
+
+			if (!this.simbolos.pertence(s)) {
+				throw new Exception("Erro no XML: O símbolo '" + c + "' usado na transição de " + origem + " para " + destino + " não foi declarado no alfabeto <simbolos>.");
+			}
+
+			TransicaoD nova = new TransicaoD();
+			nova.setOrigem(new Estado(origem));
+			nova.setDestino(new Estado(destino));
+			nova.setSimbolo(new Simbolo(c));
+			funcaoPrograma.inclui(nova);
+		}
+	}
+
+
+
+
+
 	// Limpa a estrutura de dados do AFD
 	private void limpa() {
 		// limpa Alfabeto
 		simbolos.limpar();
+		//limpa Delimitador
+		delimitador.limpar();
 		// limpa conjunto de estados
 		estados.limpar();
 		// limpa Funcao Programa
@@ -307,14 +303,7 @@ public class AFD {
 		estadosFinais.limpar();
 	}
 
-	/**
-	 * Fun��o Programa
-	 * 
-	 * @return estado alcan�avel depois de processar o Simbolo s a partir de estados
-	 *         e
-	 * @param Estado  estado onde iniciar� o processamento
-	 * @param Simbolo simbolo a ser processado
-	 */
+
 	public Estado p(Estado e, Simbolo s) {
 		ConjuntoTransicaoD fp;
 		TransicaoD t;
@@ -324,18 +313,9 @@ public class AFD {
 			if (t.getOrigem().igual(e) && t.getSimbolo().igual(s))
 				return t.getDestino();
 		}
-
 		return null;
 	}
 
-	/**
-	 * Fun��o Programa Estendida
-	 * 
-	 * @return estado alcan�avel depois de processar a palavra p a partir de um
-	 *         estados e
-	 * @param Estado Estado onde iniciar� o processamento
-	 * @param String palavra a ser processada
-	 */
 	public Estado pe(Estado e, String p) {
 		Estado eAtual = e;
 		Simbolo s;
@@ -350,21 +330,12 @@ public class AFD {
 		return eAtual;
 	}
 
-	/**
-	 * Retorna se uma palavra � aceita ou n�o por determinado AFD
-	 * 
-	 * @return true caso a palavra � aceita; false caso contr�rio
-	 * @param String palavra a ser avaliada
-	 */
+
 	public boolean Aceita(String p) {
 		return getEstadosFinais().pertence(pe(getEstadoInicial(), p));
 	}
 
-	/*
-	 * Cria arquivo XML do AFD com nome de filename.xml
-	 * 
-	 * @param filename Nome do arquivo XML que será criado sem a extensão.
-	 */
+
 	public void toXML(String filename) throws IOException {
 		FileWriter writer = new FileWriter(filename + ".xml");
 		PrintWriter saida = new PrintWriter(writer);
@@ -377,6 +348,9 @@ public class AFD {
 			saida.println("\t\t<elemento valor= \"" + s.toString() + "\"/>");
 		}
 		saida.println("\t</simbolos>");
+		saida.println();
+
+		saida.println("\t<delimitador valor= \"" + this.getDelimitador().toString() + "\"/>");
 		saida.println();
 
 		saida.println("\t<estados>");
