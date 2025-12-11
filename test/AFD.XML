@@ -3,6 +3,7 @@
        <bloco valor="0-9"/>
        <elemento valor="."/>
        <elemento valor=" "/>
+       <delimitador valor=";"/>
    </simbolos>
 
    <estados>

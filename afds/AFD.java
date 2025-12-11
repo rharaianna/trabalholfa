@@ -22,6 +22,7 @@ import org.w3c.dom.NodeList;
 
 public class AFD {
 	private ConjuntoSimbolo simbolos;
+	private ConjuntoSimbolo delimitador;
 	private ConjuntoEstados estados;
 	private ConjuntoEstados estadosFinais;
 	private ConjuntoTransicaoD funcaoPrograma;
@@ -46,10 +47,11 @@ public class AFD {
 	 *                       ConjuntoEstados que representa o conjunto de estados
 	 *                       finais do automato finito deterministico
 	 */
-	public AFD(ConjuntoSimbolo simbolos, ConjuntoEstados estados,
+	public AFD(ConjuntoSimbolo simbolos, ConjuntoSimbolo delimitador, ConjuntoEstados estados,
 			ConjuntoTransicaoD funcaoPrograma, Estado estadoInicial,
 			ConjuntoEstados estadosFinais) {
 		this.simbolos = simbolos.clonar();
+		this.delimitador = delimitador.clonar();
 		this.estados = estados.clonar();
 		this.funcaoPrograma = funcaoPrograma.clonar();
 		this.estadoInicial = estadoInicial.clonar();
@@ -61,124 +63,48 @@ public class AFD {
 		estados = new ConjuntoEstados();
 		estadosFinais = new ConjuntoEstados();
 		funcaoPrograma = new ConjuntoTransicaoD();
+		delimitador = new ConjuntoSimbolo();
 	}
 
-	/**
-	 * Obtem o estado inicial do autamato finito deterministico
-	 * 
-	 * @return estadoInicial - Estado que representa o estado inicial do
-	 *         aut�mato finito determin�stico
-	 */
-	public Estado getEstadoInicial() {
-		return this.estadoInicial.clonar();
-	}
-
-	/**
-	 * Ajusta o estado inicial do automato finito deterministico para o valor
-	 * passado como parametro
-	 * 
-	 * @param estadoInicial
-	 *                      um Estado a ser definido como estado inicial do aut�mato
-	 *                      finito determin�stico
-	 */
+	public Estado getEstadoInicial() { return this.estadoInicial.clonar(); }
 	public void setEstadoInicial(Estado estadoInicial) {
 		this.estadoInicial = estadoInicial.clonar();
 	}
 
-	/**
-	 * Obt�m o conjunto de estados do aut�mato finito determin�stico
-	 * 
-	 * @return estados - ConjuntoEstados que representa o conjunto de estados do
-	 *         aut�mato finito determin�stico
-	 */
 	public ConjuntoEstados getEstados() {
 		return this.estados.clonar();
 	}
-
-	/**
-	 * Ajusta o conjunto de estados do aut�mato finito determin�stico para o
-	 * valor passado como par�metro
-	 * 
-	 * @param estados
-	 *                um ConjuntoEstados a ser definido como o conjunto de estados
-	 *                do aut�mato finito determin�stico
-	 */
 	public void setEstados(ConjuntoEstados estados) {
 		this.estados = estados.clonar();
 	}
 
-	/**
-	 * Obt�m o conjunto de estados finais do aut�mato finito determin�stico
-	 * 
-	 * @return estadosFinais - ConjuntoEstados que representa o conjunto de
-	 *         estados finais do aut�mato finito determin�stico
-	 */
+	public ConjuntoSimbolo getDelimitador() { return delimitador;}
+	public void setDelimitador(ConjuntoSimbolo delimitador) { this.delimitador = delimitador;}
+
 	public ConjuntoEstados getEstadosFinais() {
 		return this.estadosFinais.clonar();
 	}
-
-	/**
-	 * Ajusta o conjunto de estados finais do aut�mato finito determin�stico
-	 * para o valor passado como par�metro
-	 * 
-	 * @param estadosFinais
-	 *                      um ConjuntoEstados a ser definido como o conjunto de
-	 *                      estados
-	 *                      finais do aut�mato finito determin�stico
-	 */
 	public void setEstadosFinais(ConjuntoEstados estadosFinais) {
 		this.estadosFinais = estadosFinais.clonar();
 	}
 
-	/**
-	 * Obt�m a fun��o programa do aut�mato finito determin�stico
-	 * 
-	 * @return funcaoPrograma - ConjuntoTransicaoD que representa a fun��o
-	 *         programa do aut�mato finito determin�stico
-	 */
+
 	public ConjuntoTransicaoD getFuncaoPrograma() {
 		return this.funcaoPrograma.clonar();
 	}
+	public void setFuncaoPrograma(ConjuntoTransicaoD funcaoPrograma) {	this.funcaoPrograma = funcaoPrograma.clonar();}
 
-	/**
-	 * Ajusta a fun��o programa do aut�mato finito determin�stico para o valor
-	 * passado como par�metro
-	 * 
-	 * @param funcaoPrograma
-	 *                       um ConjuntoTransicaoD a ser definido como a fun��o
-	 *                       programa do aut�mato finito determin�stico
-	 */
-	public void setFuncaoPrograma(ConjuntoTransicaoD funcaoPrograma) {
-		this.funcaoPrograma = funcaoPrograma.clonar();
-	}
 
-	/**
-	 * Obtem o alfabeto do automato finito deterministico
-	 * 
-	 * @return simbolos - ConjuntoSimbolo que representa o alfabeto do automato finito deterministico
-	 */
 	public ConjuntoSimbolo getSimbolos() {
 		return this.simbolos.clonar();
 	}
-
-	/**
-	 * Ajusta o alfabeto do aut�mato finito determin�stico para o valor passado
-	 * como par�metro
-	 * 
-	 * @param simbolos
-	 *                 um ConjuntoSimbolo a ser definido como o alfabeto do aut�mato
-	 *                 finito determin�stico
-	 */
 	public void setSimbolos(ConjuntoSimbolo simbolos) {
 		this.simbolos = simbolos.clonar();
 	}
 
-	/**
-	 * Cria e retorna uma c�pia do objeto AFD
-	 * @return um clone desse AFD
-	 */
+
 	public AFD clonar() {
-		return new AFD(simbolos, estados, funcaoPrograma, estadoInicial, estadosFinais);
+		return new AFD(simbolos, delimitador, estados, funcaoPrograma, estadoInicial, estadosFinais);
 	}
 
 	public String toString() {
@@ -220,6 +146,7 @@ public class AFD {
 
 		// Leitura Símbolos - Inicio
 		lerBlocoSimbolos((Element) nl0.item(0));
+		lerDelimitadores((Element)nl0.item(0));
 		getChildTagValue(0, (Element) nl0.item(0), "elemento");
 
 		getChildTagValue(1, (Element) nl1.item(0), "elemento");
@@ -275,6 +202,26 @@ public class AFD {
 			}
 		}
 	}
+
+	// -----------------------------------------------------------------------------------------
+	public void lerDelimitadores(Element delimitadoresElem) throws Exception {
+		NodeList bloco = delimitadoresElem.getElementsByTagName("delimitador");
+
+		for (int i = 0; i < bloco.getLength(); i++) {
+			Element blocoElem = (Element) bloco.item(i);
+			List<Character> lista = expandirSimbolos(blocoElem.getAttribute("valor"));
+
+			System.out.println("AAAAAAAAAAAAAA");
+
+			for (char c : lista) {
+				System.out.println(c);
+			}
+
+
+		}
+	}
+
+	//------------------------------------------------------------------------------------------
 
 	private void adicionaTransicoes(String origem, String destino, String simbolosStr)
 			throws Exception {

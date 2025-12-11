@@ -13,15 +13,11 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 
-/**
- * Classe para a criacao de um automato finito n�o-determin�stico
- * 
- * @author Fabio Moreira Campos, Rafael Sachetto Oliveira, Tiago Jos� Melquiades
- */
 
 public class AFN {
 
 	private ConjuntoSimbolo simbolos;
+	private ConjuntoSimbolo delimitador;
 	private ConjuntoEstados estados;
 	private ConjuntoEstados estadosFinais;
 	private ConjuntoEstados cestadoInicial;
@@ -47,11 +43,12 @@ public class AFN {
 	 *            ConjuntoEstados que representa o conjunto de estados finais do
 	 *            automato finito nao-deterministico
 	 */
-	public AFN(ConjuntoSimbolo simbolos, ConjuntoEstados estados,
+	public AFN(ConjuntoSimbolo simbolos, ConjuntoSimbolo delimitador, ConjuntoEstados estados,
 			ConjuntoTransicaoN funcaoPrograma, Estado estadoInicial,
 			ConjuntoEstados estadosFinais) {
 
 		this.simbolos = simbolos.clonar();
+		this.delimitador = delimitador.clonar();
 		this.estados = estados.clonar();
 		this.funcaoPrograma = funcaoPrograma.clonar();
 		this.estadoInicial = estadoInicial.clonar();
@@ -60,128 +57,53 @@ public class AFN {
 
         public AFN(){
 		simbolos = new ConjuntoSimbolo();
+		delimitador = new ConjuntoSimbolo();
 		estados = new ConjuntoEstados();
 		estadosFinais = new ConjuntoEstados();
 		funcaoPrograma = new ConjuntoTransicaoN();
 	}
 
-	/**
-	 * Obtem o estado inicial do automato finito nao-deterministico
-	 * 
-	 * @return estadoInicial - Estado que representa o estado inicial do
-	 *         aut�mato finito n�o-determin�stico
-	 */
-	public Estado getEstadoInicial() {
-		return estadoInicial.clonar();
-	}
 
-	/**
-	 * Ajusta o estado inicial do aut�mato finito n�o-determin�stico para o
-	 * valor passado como par�metro
-	 * 
-	 * @param estadoInicial
-	 *            um Estado a ser definido como estado inicial do aut�mato
-	 *            finito n�o-determin�stico
-	 */
+	public Estado getEstadoInicial() { return estadoInicial.clonar();}
 	public void setEstadoInicial(Estado estadoInicial) {
 		this.estadoInicial = estadoInicial.clonar();
 	}
 
-	/**
-	 * Obt�m o conjunto de estados finais do aut�mato finito n�o-determin�stico
-	 * 
-	 * @return estados - ConjuntoEstados que representa o conjunto de estados
-	 *         finais do aut�mato finito n�o-determin�stico
-	 */
 	public ConjuntoEstados getEstados() {
 		return estados.clonar();
 	}
-
-	/**
-	 * Ajusta o conjunto de estados do aut�mato finito n�o-determin�stico para o
-	 * valor passado como par�metro
-	 * 
-	 * @param estados
-	 *            um ConjuntoEstados a ser definido como o conjunto de estados
-	 *            do aut�mato finito n�o-determin�stico
-	 */
 	public void setEstados(ConjuntoEstados estados) {
 		this.estados = estados.clonar();
 	}
 
-	/**
-	 * Obt�m o conjunto de estados finais do aut�mato finito n�o-determin�stico
-	 * 
-	 * @return estadosFinais - ConjuntoEstados que representa o conjunto de
-	 *         estados finais do aut�mato finito n�o-determin�stico
-	 */
 	public ConjuntoEstados getEstadosFinais() {
 		return estadosFinais.clonar();
 	}
-
-	/**
-	 * Ajusta o conjunto de estados finais do aut�mato finito n�o-determin�stico
-	 * para o valor passado como par�metro
-	 * 
-	 * @param estadosFinais
-	 *            um ConjuntoEstados a ser definido como o conjunto de estados
-	 *            finais do aut�mato finito n�o-determin�stico
-	 */
 	public void setEstadosFinais(ConjuntoEstados estadosFinais) {
 		this.estadosFinais = estadosFinais.clonar();
 	}
 
-	/**
-	 * Obt�m a fun��o programa do aut�mato finito n�o-determin�stico
-	 * 
-	 * @return funcaoPrograma - ConjuntoTransicaoN que representa a fun��o
-	 *         programa do aut�mato finito n�o-determin�stico
-	 */
 	public ConjuntoTransicaoN getFuncaoPrograma() {
 		return funcaoPrograma.clonar();
 	}
-
-	/**
-	 * Ajusta a fun��o programa do aut�mato finito n�o-determin�stico para o
-	 * valor passado como par�metro
-	 * 
-	 * @param funcaoPrograma
-	 *            um ConjuntoTransicaoN a ser definido como a fun��o programa do
-	 *            aut�mato finito n�o-determin�stico
-	 */
 	public void setFuncaoPrograma(ConjuntoTransicaoN funcaoPrograma) {
 		this.funcaoPrograma = funcaoPrograma.clonar();
 	}
 
-	/**
-	 * Obt�m o alfabeto do aut�mato finito n�o-determin�stico
-	 * 
-	 * @return simbolos - ConjuntoSimbolo que representa o alfabeto do aut�mato
-	 *         finito n�o-determin�stico
-	 */
 	public ConjuntoSimbolo getSimbolos() {
 		return simbolos.clonar();
 	}
-
-	/**
-	 * Ajusta o alfabeto do aut�mato finito n�o-determin�stico para o valor
-	 * passado como par�metro
-	 * 
-	 * @param simbolos
-	 *            um ConjuntoSimbolo a ser definido como o alfabeto do aut�mato
-	 *            finito n�o-determin�stico
-	 */
 	public void setSimbolos(ConjuntoSimbolo simbolos) {
 		this.simbolos = simbolos.clonar();
 	}
 
-	/**
-	 * Cria e retorna uma copia do objeto AFN
-	 * 
-	 * @return um clone desse AFN
-	 */
+	public ConjuntoSimbolo getDelimitador() {return delimitador.clonar();}
+	public void setDelimitador(ConjuntoSimbolo delimitador) { this.delimitador = delimitador.clonar();}
+
+
+
 	public AFN clonar() {
-		return new AFN(simbolos, estados, funcaoPrograma, estadoInicial,
+		return new AFN(simbolos, delimitador, estados, funcaoPrograma, estadoInicial,
 				estadosFinais);
 	}
 
@@ -279,6 +201,7 @@ public class AFN {
 
 		// Paramentros para criar o novo AFD
 		ConjuntoSimbolo novoCsi = this.getSimbolos().clonar();
+		ConjuntoSimbolo novoDel = this.getDelimitador().clonar();
 		ConjuntoEstados novoCe = new ConjuntoEstados();
 		ConjuntoTransicaoD novoCtD = new ConjuntoTransicaoD();
 		//Estado novoEi = this.getEstadoInicial().clonar();
@@ -418,7 +341,7 @@ public class AFN {
 		}
 
 		// Cria o novo AFD
-		AFD novoAFD = new AFD(novoCsi, novoCe, novoCtD, novoEi, novoCef);
+		AFD novoAFD = new AFD(novoCsi, novoDel, novoCe, novoCtD, novoEi, novoCef);
 		return novoAFD;
 	}
 
