@@ -1,54 +1,38 @@
 <AFD>
-   <simbolos>
-       <bloco valor="0-9"/>
-       <elemento valor="."/>
-       <elemento valor=" "/>
-   </simbolos>
+    <simbolos>
+        <elemento valor="a"/>
+        <elemento valor="b"/>
+    </simbolos>
 
-   <delimitador valor= ";"/>
+    <delimitador valor=";"/>
 
-   <estados>
-       <elemento valor= "A"/>
-       <elemento valor= "B"/>
-       <elemento valor= "C"/>
-       <elemento valor= "D"/>
-       <elemento valor= "E"/>
-       <elemento valor= "F"/>
-   </estados>
+    <estados>
+        <elemento valor="A"/>
+        <elemento valor="B"/>
+        <elemento valor="C"/>
+    </estados>
 
-   <estadosFinais>
-       <elemento valor="B"/>
-       <elemento valor="D"/>
-       <elemento valor="E"/>
-   </estadosFinais>
+    <estadosFinais>
+        <elemento valor="C"/>
+    </estadosFinais>
 
     <funcaoPrograma>
 
-        <!-- Automato q aceita inteiros e decimais sem 0 nao significatovos -->
         <elemento origem="A">
-            <destino destino="B" simbolo="0"/>
-            <destino destino="E" simbolo="1-9"/>
+            <destino destino="B" simbolo="a"/>
         </elemento>
 
         <elemento origem="B">
-            <destino destino="C" simbolo="."/>
+            <destino destino="B" simbolo="a"/>
+            <destino destino="C" simbolo="b"/>
         </elemento>
 
         <elemento origem="C">
-            <destino destino="D" simbolo="0-9"/>
-        </elemento>
-
-        <elemento origem="D">
-            <destino destino="D" simbolo="0-9"/>
-        </elemento>
-
-        <elemento origem="E">
-            <destino destino="C" simbolo="."/>
-            <destino destino="E" simbolo="0-9"/>
+            <destino destino="C" simbolo="b"/>
+            <destino destino="B" simbolo="a"/>
         </elemento>
 
     </funcaoPrograma>
 
-   <estadoInicial valor= "A"/>
-
+    <estadoInicial valor="A"/>
 </AFD>
