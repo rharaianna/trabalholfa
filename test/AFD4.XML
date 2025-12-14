@@ -1,0 +1,47 @@
+<!-- hexadecimal  -->
+<AFD>
+    <simbolos>
+        <bloco valor="0-9"/>
+        <bloco valor="A-F"/>
+        <bloco valor="a-f"/>
+        <elemento valor="x"/>
+        <elemento valor="X"/>
+        <elemento valor="0"/>
+    </simbolos>
+
+    <delimitador valor=";"/>
+
+    <estados>
+        <elemento valor="A"/>
+        <elemento valor="B"/>
+        <elemento valor="C"/>
+    </estados>
+
+    <estadosFinais>
+        <elemento valor="C"/>
+    </estadosFinais>
+
+    <funcaoPrograma>
+
+        <!-- Começa com 0 -->
+        <elemento origem="A">
+            <destino destino="B" simbolo="0"/>
+        </elemento>
+
+        <!-- Depois x ou X -->
+        <elemento origem="B">
+            <destino destino="C" simbolo="x"/>
+            <destino destino="C" simbolo="X"/>
+        </elemento>
+
+        <!-- Dígitos hexadecimais -->
+        <elemento origem="C">
+            <destino destino="C" simbolo="0-9"/>
+            <destino destino="C" simbolo="A-F"/>
+            <destino destino="C" simbolo="a-f"/>
+        </elemento>
+
+    </funcaoPrograma>
+
+    <estadoInicial valor="A"/>
+</AFD>

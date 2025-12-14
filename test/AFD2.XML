@@ -1,0 +1,71 @@
+<!-- notação científica  -->
+<AFD>
+    <simbolos>
+        <bloco valor="0-9"/>
+        <elemento valor="."/>
+        <elemento valor="E"/>
+        <elemento valor="e"/>
+        <elemento valor="+"/>
+        <elemento valor="-"/>
+    </simbolos>
+
+    <delimitador valor=";"/>
+
+    <estados>
+        <elemento valor="A"/>
+        <elemento valor="B"/>
+        <elemento valor="C"/>
+        <elemento valor="D"/>
+        <elemento valor="E"/>
+        <elemento valor="F"/>
+        <elemento valor="G"/>
+    </estados>
+
+    <estadosFinais>
+        <elemento valor="G"/>
+    </estadosFinais>
+
+    <funcaoPrograma>
+
+        <!-- Parte inteira -->
+        <elemento origem="A">
+            <destino destino="B" simbolo="0-9"/>
+        </elemento>
+
+        <elemento origem="B">
+            <destino destino="B" simbolo="0-9"/>
+            <destino destino="C" simbolo="."/>
+            <destino destino="E" simbolo="E"/>
+            <destino destino="E" simbolo="e"/>
+        </elemento>
+
+        <!-- Parte decimal -->
+        <elemento origem="C">
+            <destino destino="D" simbolo="0-9"/>
+        </elemento>
+
+        <elemento origem="D">
+            <destino destino="D" simbolo="0-9"/>
+            <destino destino="E" simbolo="E"/>
+            <destino destino="E" simbolo="e"/>
+        </elemento>
+
+        <!-- Expoente -->
+        <elemento origem="E">
+            <destino destino="F" simbolo="+"/>
+            <destino destino="F" simbolo="-"/>
+            <destino destino="G" simbolo="0-9"/>
+        </elemento>
+
+        <elemento origem="F">
+            <destino destino="G" simbolo="0-9"/>
+        </elemento>
+
+        <elemento origem="G">
+            <destino destino="G" simbolo="0-9"/>
+        </elemento>
+
+    </funcaoPrograma>
+
+    <estadoInicial valor="A"/>
+</AFD>

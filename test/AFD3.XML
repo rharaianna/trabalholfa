@@ -1,0 +1,34 @@
+<!-- binários  -->
+<AFD>
+    <simbolos>
+        <elemento valor="0"/>
+        <elemento valor="1"/>
+    </simbolos>
+
+    <delimitador valor=";"/>
+
+    <estados>
+        <elemento valor="A"/>
+        <elemento valor="B"/>
+    </estados>
+
+    <estadosFinais>
+        <elemento valor="B"/>
+    </estadosFinais>
+
+    <funcaoPrograma>
+
+        <elemento origem="A">
+            <destino destino="B" simbolo="0"/>
+            <destino destino="B" simbolo="1"/>
+        </elemento>
+
+        <elemento origem="B">
+            <destino destino="B" simbolo="0"/>
+            <destino destino="B" simbolo="1"/>
+        </elemento>
+
+    </funcaoPrograma>
+
+    <estadoInicial valor="A"/>
+</AFD>

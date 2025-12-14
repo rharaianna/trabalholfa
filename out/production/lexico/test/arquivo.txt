@@ -1,1 +1,11 @@
-ab;aab;aaab;aaaaabb;abababbabaaabb
+ab;aab;aaab;aaaaabb;abababbabaaabb;
+
+1;0;10;90;1000;101;
+
+1e10;2.5e-3;0.01E+5;3E8;10e0;9.99E99;
+
+0x1;0xFF;0Xabc;0x09A3;
+
+
+0;101;1100101;
+
