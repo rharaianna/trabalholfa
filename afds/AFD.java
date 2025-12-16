@@ -179,6 +179,7 @@ public class AFD {
 		}
 	}
 
+	//Lê conjuntos
 	private void getChildTagValue(int tipo, Element elem, String tagName)
 			throws Exception {
 		NodeList children = elem.getElementsByTagName(tagName);
@@ -206,6 +207,7 @@ public class AFD {
 		}
 	}
 
+	//Lê Transições
 	private void getChildTagValue(Element elem, String tagName) throws Exception {
 		TransicaoD transD = new TransicaoD();
 		NodeList children = elem.getElementsByTagName(tagName);
