@@ -154,18 +154,15 @@ public class AFD {
 		getChildTagValue((Element) nl3.item(0), "elemento");
 
 
-		//AQUI-----------------------------------------------------------------------
-
+		//Le valor do delimitador
 		Element delimit = (Element) nl5.item(0);
 		String valor = delimit.getAttribute("valor");
-
-		delimitador.inclui(new Simbolo(valor.charAt(0))); // Conferir metodo inclui
-		//FIM AQUI-----------------------------------------------------------------------
+		delimitador.inclui(new Simbolo(valor.charAt(0)));
 
 
+		//Le valor do estado inicial
 		Element eI = (Element) nl4.item(0);
 		estadoInicial = new Estado(eI.getAttribute("valor"));
-
 
 	}
 
@@ -238,6 +235,7 @@ public class AFD {
 
 		String[] partes = simbolosStr.split(",");
 
+		//Pra se a transição for um espaço ela não ser apagada pelo trim
 		for (String p : partes) {
 			if (p.equals(" ")) {
 				lista.add(' ');
@@ -247,6 +245,7 @@ public class AFD {
 			p = p.trim();
 			if (p.isEmpty()) continue;
 
+			//Só tem como fazer essa sequência se o início e o fim sao compostos de um unico char
 			if (p.length() == 3 && p.charAt(1) == '-') {
 				char inicio = p.charAt(0);
 				char fim = p.charAt(2);
@@ -287,7 +286,7 @@ public class AFD {
 
 
 
-
+// Fim das mudanças ----------------------------------------------------------------------------------------------------------------
 
 	// Limpa a estrutura de dados do AFD
 	private void limpa() {

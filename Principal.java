@@ -26,7 +26,7 @@ public class Principal {
     }
 
     public Principal() throws Exception {
-        automato.ler("test/AFD.XML");
+        automato.ler("test/AFD1.XML");
     }
 
     public void inicio() {
@@ -68,10 +68,12 @@ public class Principal {
     // Le um token retona 1: se sucesso e 0: se erro -1 se fim
     public String lexico(BufferedReader r) throws IOException {
         String token = "";
+
+        //Corrente ja é declarada no corpo da classe
         corrente = automato.getEstadoInicial();
         ConjuntoSimbolo delimitadores = automato.getDelimitador();
 
-        r.mark(1); // Marca a posição atual para poder voltar 1 char se precisar
+        r.mark(1); // Marca a posição atual para poder voltar se precisar
         Simbolo p = proximo(r);
 
 
@@ -86,10 +88,10 @@ public class Principal {
             }
         }
 
-        if (p == null) return "fim"; // Arquivo acabou só com delimitadores //TESTAR
+        if (p == null) return "fim"; // Arquivo acabou só com delimitadores
+
 
         while (p != null) {
-
             // Antes de transitar, verifica se é um delimitador
             if (delimitadores.pertence(p)) {
                 // Encontramos um separador! O token acabou.
@@ -121,6 +123,8 @@ public class Principal {
             r.mark(1);
             p = proximo(r);
         }
+
+        //Chegou no final de arquivo mas o leu token valido
         if (automato.getEstadosFinais().pertence(corrente)) {
             return token;
         }
@@ -128,8 +132,6 @@ public class Principal {
     }
 
     // chama lexico até chegar no final de arquivo ou erro léxico
-
-    // O proximo agora retorna TUDO, inclusive espaços e quebras de linha.
     // Quem decide o que fazer com eles é o analisador léxico.
     public Simbolo proximo(BufferedReader reader) throws IOException {
         int charLido = reader.read();
