@@ -71,15 +71,15 @@ public class TransicaoD {
 		return td;
 	}
         
-        public boolean igual(TransicaoD transicao){
-            if ( this.destino.igual(transicao.getDestino()) &&
-                this.origem.igual(transicao.getOrigem()) &&
-                this.simbolo.igual(transicao.getSimbolo()))
-                return true;
-            else return false;
-        }
+    public boolean igual(TransicaoD transicao){
+        if ( this.destino.igual(transicao.getDestino()) &&
+            this.origem.igual(transicao.getOrigem()) &&
+            this.simbolo.igual(transicao.getSimbolo()))
+            return true;
+        else return false;
+    }
         
-        public String toString()
+    public String toString()
 	{
 		String s = new String();
 		s += "(";                

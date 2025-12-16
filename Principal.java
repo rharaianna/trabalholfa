@@ -27,6 +27,7 @@ public class Principal {
 
     public Principal() throws Exception {
         automato.ler("test/AFD1.XML");
+        //automato.toXML("test/novoXML");
     }
 
     public void inicio() {
