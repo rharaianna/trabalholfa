@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
+import java.util.List;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -379,19 +380,22 @@ public class AFN {
 		saida.println();
 
 		saida.println("\t<funcaoPrograma>");
-		for (Iterator iter = this.getFuncaoPrograma().getElementos().iterator(); iter
-				.hasNext();) {
-			TransicaoN element = (TransicaoN) iter.next();
-			ConjuntoEstados estados = element.getDestino();
-			for (Iterator iterator = estados.getElementos().iterator(); iterator
-					.hasNext();) {
-				Estado e = (Estado) iterator.next();
-				saida.println("\t\t<elemento origem= \""
-						+ element.getOrigem().toString() + "\" destino= \""
-						+ e.toString() + "\" simbolo= \""
-						+ element.getSimbolo().toString() + "\"/>");
+
+		for(Iterator iterS = estados.iterator(); iterS.hasNext();){
+			Estado e = (Estado) iterS.next();
+			List<TransicaoN> transicoes = funcaoPrograma.getTransicoesSaindoDe(e);
+			if(transicoes.isEmpty()){
+				continue;
 			}
+			saida.println("\t\t<elemento origem= \"" + e.getNome() + "\">");
+			for(Iterator<TransicaoN> iterT = transicoes.iterator(); iterT.hasNext();){
+				TransicaoN t = iterT.next();
+				saida.println("\t\t\t<destino destino=\"" + t.getDestino() + "\" simbolo=\"" + t.getSimbolo() + "\"/>");
+			}
+			
+			saida.println("\t\t</elemento>");
 		}
+
 		saida.println("\t</funcaoPrograma>");
 		saida.println();
 
