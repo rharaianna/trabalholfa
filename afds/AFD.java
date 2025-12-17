@@ -2,7 +2,8 @@
  * Classe para a criacao de um automato finito deterministico
  * @author Fabio Moreira Campos, Rafael Sachetto Oliveira, Tiago Jose Melquiades
  * @author Claudio Soares Junior, Gildo
- */
+ * @author João Pedro Salim, Nina Aguiar, Rhara Ianna
+*/
 
 package afds;
 

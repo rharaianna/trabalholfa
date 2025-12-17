@@ -3,7 +3,9 @@ package afds;
 /**
  * Classe que representa um conjunto de estados de um aut�mato
  * @author F�bio Moreira Campos, Rafael Sachetto Oliveira, Tiago Jos� Melquiades
- */
+ * @author João Pedro Salim, Nina Aguiar, Rhara Ianna
+*/
+
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;

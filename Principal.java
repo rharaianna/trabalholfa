@@ -1,3 +1,9 @@
+/**
+ * @author João Pedro Salim, Nina Aguiar, Rhara Ianna
+*/
+
+
+
 
 import afds.*;
 
