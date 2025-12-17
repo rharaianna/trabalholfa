@@ -1,38 +1,37 @@
 <AFD>
     <simbolos>
-        <elemento valor="a"/>
-        <elemento valor="b"/>
+        <elemento valor="a" />
+        <elemento valor="b" />
     </simbolos>
 
-    <delimitador valor=";"/>
+    <delimitador valor=";" />
 
     <estados>
-        <elemento valor="A"/>
-        <elemento valor="B"/>
-        <elemento valor="C"/>
+        <elemento valor="A" />
+        <elemento valor="B" />
+        <elemento valor="C" />
     </estados>
 
     <estadosFinais>
-        <elemento valor="C"/>
+        <elemento valor="C" />
     </estadosFinais>
 
     <funcaoPrograma>
-
         <elemento origem="A">
-            <destino destino="B" simbolo="a"/>
+            <destino destino="B" simbolo="a" />
         </elemento>
 
         <elemento origem="B">
-            <destino destino="B" simbolo="a"/>
-            <destino destino="C" simbolo="b"/>
+            <destino destino="B" simbolo="a" />
+            <destino destino="C" simbolo="b" />
         </elemento>
 
         <elemento origem="C">
-            <destino destino="C" simbolo="b"/>
-            <destino destino="B" simbolo="a"/>
+            <destino destino="C" simbolo="b" />
+            <destino destino="B" simbolo="a" />
         </elemento>
 
     </funcaoPrograma>
 
-    <estadoInicial valor="A"/>
+    <estadoInicial valor="A" />
 </AFD>

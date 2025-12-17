@@ -1,5 +1,7 @@
 package afds;
 
+import java.util.ArrayList;
+
 /**
  * Classe que representa um conjunto de transi��es determin�sticas de um aut�mato
  * @author F�bio Moreira Campos, Rafael Sachetto Oliveira, Tiago Jos� Melquiades
@@ -8,7 +10,9 @@ package afds;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
+import java.util.ArrayList;
 
 public class ConjuntoTransicaoD {
 
@@ -227,5 +231,18 @@ public class ConjuntoTransicaoD {
 	 */
 	public void removerElemento(TransicaoD t){
 		elementos.remove(t);
+	}
+
+	public List<TransicaoD> getTransicoesSaindoDe(Estado origem){
+		List<TransicaoD> retorno = new ArrayList<>();
+
+		for(Iterator iter = elementos.iterator(); iter.hasNext();){
+			TransicaoD t = (TransicaoD) iter.next();
+			if(t.getOrigem().igual(origem)){
+				retorno.add(t);
+			}
+		}
+
+		return retorno;
 	}
 }

@@ -52,11 +52,11 @@ public class Simbolo {
 		return s;		
 	}
         
-        public boolean igual(Simbolo simbolo){
-            if (this.getSimbolo() == simbolo.getSimbolo())
-                return true;
-            else return false;
-        }
+    public boolean igual(Simbolo simbolo){
+        if (this.getSimbolo() == simbolo.getSimbolo())
+            return true;
+        else return false;
+    }
         
 	public String toString()
 	{
