@@ -5,7 +5,7 @@
         <bloco valor="0-9"/>
     </simbolos>
 
-    <delimitador valor=";"/>
+    <delimitador valor=" "/>
 
     <estados>
         <elemento valor="A"/>

@@ -26,7 +26,7 @@ public class Principal {
     }
 
     public Principal() throws Exception {
-        automato.ler("test/AFD1.XML");
+        automato.ler("test/AFD2.XML");
     }
 
     public void inicio() {
@@ -50,7 +50,7 @@ public class Principal {
                     System.out.println("Token reconhecido: " + resultado);
                 }
 
-                // Lê o próximo
+                // Lê o próximo -> por conta do buffered Reader para na ultima posição lida
                 resultado = lexico(reader);
             }
 
@@ -73,14 +73,14 @@ public class Principal {
         corrente = automato.getEstadoInicial();
         ConjuntoSimbolo delimitadores = automato.getDelimitador();
 
-        r.mark(1); // Marca a posição atual para poder voltar se precisar
+        //r.mark(1); // Marca a posição atual para poder voltar se precisar
         Simbolo p = proximo(r);
 
 
         // 1. Pular delimitadores iniciais
         while (p != null) {
             if(delimitadores.pertence(p)){
-                r.mark(1); // Marca novamente após consumir o espaço
+                //r.mark(1); // Marca novamente após consumir o espaço
                 p = proximo(r);
             }
             else{
@@ -98,7 +98,7 @@ public class Principal {
 
                 if (automato.getEstadosFinais().pertence(corrente)) {
                     // Se paramos em um estado final (ex: B, D ou E), SUCESSO.
-                    r.reset(); // Devolve o delimitador para ser lido na próxima vez (ou ignorado no início)
+                    //r.reset(); // Devolve o delimitador para ser lido na próxima vez (ou ignorado no início)
                     return token;
                 } else {
                     // Se paramos no meio do caminho (ex: estado C "0."), ERRO.
@@ -120,7 +120,7 @@ public class Principal {
             corrente = proximoEstado;
 
             // Prepara leitura do próximo
-            r.mark(1);
+            //r.mark(1);
             p = proximo(r);
         }
 
