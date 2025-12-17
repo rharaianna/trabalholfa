@@ -50,11 +50,11 @@ public class Estado {
 		return e;		
 	}
         
-        public boolean igual(Estado estado){
-            if (this.getNome().equals(estado.getNome()))
-                return true;
-            else return false;
-        }   
+    public boolean igual(Estado estado){
+        if (this.getNome().equals(estado.getNome()))
+            return true;
+        else return false;
+    }
         
 	public String toString(){
 		String s = new String();		

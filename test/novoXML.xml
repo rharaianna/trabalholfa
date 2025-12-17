@@ -1,0 +1,58 @@
+<AFD>
+
+	<simbolos>
+		<elemento valor= "0"/>
+		<elemento valor= "1"/>
+		<elemento valor= "2"/>
+		<elemento valor= "3"/>
+		<elemento valor= "4"/>
+		<elemento valor= "5"/>
+		<elemento valor= "6"/>
+		<elemento valor= "7"/>
+		<elemento valor= "8"/>
+		<elemento valor= "9"/>
+	</simbolos>
+
+	<delimitador valor= "{;}"/>
+
+	<estados>
+		<elemento valor= "A"/>
+		<elemento valor= "B"/>
+		<elemento valor= "C"/>
+	</estados>
+
+	<estadosFinais>
+		<elemento valor= "B"/>
+		<elemento valor= "C"/>
+	</estadosFinais>
+
+	<funcaoPrograma>
+		<elemento origem= "A">
+			<destino destino="B" simbolo="0"/>
+			<destino destino="C" simbolo="1"/>
+			<destino destino="C" simbolo="2"/>
+			<destino destino="C" simbolo="3"/>
+			<destino destino="C" simbolo="4"/>
+			<destino destino="C" simbolo="5"/>
+			<destino destino="C" simbolo="6"/>
+			<destino destino="C" simbolo="7"/>
+			<destino destino="C" simbolo="8"/>
+			<destino destino="C" simbolo="9"/>
+		</elemento>
+		<elemento origem= "C">
+			<destino destino="C" simbolo="0"/>
+			<destino destino="C" simbolo="1"/>
+			<destino destino="C" simbolo="2"/>
+			<destino destino="C" simbolo="3"/>
+			<destino destino="C" simbolo="4"/>
+			<destino destino="C" simbolo="5"/>
+			<destino destino="C" simbolo="6"/>
+			<destino destino="C" simbolo="7"/>
+			<destino destino="C" simbolo="8"/>
+			<destino destino="C" simbolo="9"/>
+		</elemento>
+	</funcaoPrograma>
+
+	<estadoInicial valor= "A"/>
+
+</AFD>

@@ -1,5 +1,7 @@
 package afds;
 
+import java.util.ArrayList;
+
 /*
  * Classe que representa um conjunto de transicoes nao-deterministicas de um automato
  * @author Fabio Moreira Campos, Rafael Sachetto Oliveira, Tiago Jose Melquiades
@@ -7,6 +9,7 @@ package afds;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ConjuntoTransicaoN {
@@ -211,6 +214,21 @@ public class ConjuntoTransicaoN {
 	 */
 	public void removerElemento(TransicaoN t){
 		elementos.remove(t);
+	}
+
+
+	public List<TransicaoN> getTransicoesSaindoDe(Estado origem){
+		List<TransicaoN> retorno = new ArrayList<>();
+
+		for(Iterator iter = elementos.iterator(); iter.hasNext();){
+			TransicaoN t = (TransicaoN)iter.next();
+			if(t.getOrigem().igual(origem)){
+				retorno.add(t);
+			}
+		}
+
+
+		return retorno;
 	}
 
 }

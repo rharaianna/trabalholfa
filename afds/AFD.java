@@ -230,8 +230,6 @@ public class AFD {
 		}
 	}
 
-
-
 	private List<Character> expandirSimbolos(String simbolosStr) {
 		List<Character> lista = new ArrayList<>();
 
@@ -369,13 +367,23 @@ public class AFD {
 		saida.println();
 
 		saida.println("\t<funcaoPrograma>");
-		for (Iterator iter = this.getFuncaoPrograma().getElementos().iterator(); iter.hasNext();) {
-			TransicaoD element = (TransicaoD) iter.next();
-			saida.println("\t\t<elemento origem= \""
-					+ element.getOrigem().toString() + "\" destino= \""
-					+ element.getDestino().toString() + "\" simbolo= \""
-					+ element.getSimbolo().toString() + "\"/>");
+
+		//Itera sobre todos os estados:
+		for(Iterator iterS = estados.iterator(); iterS.hasNext();){
+			Estado e = (Estado) iterS.next();
+			List<TransicaoD> transicoes = funcaoPrograma.getTransicoesSaindoDe(e);
+			if(transicoes.isEmpty()){
+				continue;
+			}
+			saida.println("\t\t<elemento origem= \"" + e.getNome() + "\">");
+			for(Iterator<TransicaoD> iterT = transicoes.iterator(); iterT.hasNext();){
+				TransicaoD t = iterT.next();
+				saida.println("\t\t\t<destino destino=\"" + t.getDestino() + "\" simbolo=\"" + t.getSimbolo() + "\"/>");
+			}
+			
+			saida.println("\t\t</elemento>");
 		}
+
 		saida.println("\t</funcaoPrograma>");
 		saida.println();
 
