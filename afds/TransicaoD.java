@@ -1,8 +1,11 @@
 package afds;
 
 /**
+ * @author João Pedro Salim, Nina Aguiar, Rhara Ianna
+*/
+
+/**
  * Classe que representa a fun��o programa de um aut�mato finito determin�stico
- * @author F�bio Moreira Campos, Rafael Sachetto Oliveira, Tiago Jos� Melquiades
  */
 public class TransicaoD {
 	

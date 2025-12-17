@@ -2,9 +2,12 @@ package afds;
 
 import java.util.ArrayList;
 
+/**
+ * @author João Pedro Salim, Nina Aguiar, Rhara Ianna
+*/
+
 /*
  * Classe que representa um conjunto de transicoes nao-deterministicas de um automato
- * @author Fabio Moreira Campos, Rafael Sachetto Oliveira, Tiago Jose Melquiades
  */
 
 import java.util.Iterator;

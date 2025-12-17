@@ -3,8 +3,11 @@ package afds;
 import java.util.ArrayList;
 
 /**
+ * @author João Pedro Salim, Nina Aguiar, Rhara Ianna
+*/
+
+/**
  * Classe que representa um conjunto de transi��es determin�sticas de um aut�mato
- * @author F�bio Moreira Campos, Rafael Sachetto Oliveira, Tiago Jos� Melquiades
  */
 
 import java.util.Iterator;

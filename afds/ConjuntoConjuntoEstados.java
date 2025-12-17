@@ -1,8 +1,11 @@
 package afds;
 
 /**
+ * @author João Pedro Salim, Nina Aguiar, Rhara Ianna
+*/
+
+/**
  * Classe que representa um conjunto de conjunto de estados de um aut�mato
- * @author Daniel Vasconcellos Barral Ferreira, Ela�se Rocha Cipriani, Alan Manso
  */
 
 import java.util.Iterator;

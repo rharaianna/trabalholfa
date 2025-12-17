@@ -1,8 +1,11 @@
 package afds;
 
 /**
+ * @author João Pedro Salim, Nina Aguiar, Rhara Ianna
+*/
+
+/**
  * Classe que representa um estado de um aut�mato
- * @author F�bio Moreira Campos, Rafael Sachetto Oliveira, Tiago Jos� Melquiades
  */
 
 public class Estado {

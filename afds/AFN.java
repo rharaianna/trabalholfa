@@ -1,3 +1,6 @@
+/**
+ * @author João Pedro Salim, Nina Aguiar, Rhara Ianna
+*/
 
 package afds;
 import java.io.FileWriter;
