@@ -45,6 +45,7 @@ public class ConjuntoEstados {
 	 *            Estado a ser inserido no conjunto de estados
 	 */
 	public void inclui(Estado elemento) {
+		System.out.println("Adicionei elemento: " + elemento.toString());
 		elementos.add(elemento.clonar());
 	}
 

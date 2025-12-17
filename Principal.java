@@ -54,6 +54,7 @@ public class Principal {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Criando um AFD.\nQuantos estados tem seu automato?");
         int numEstados = scanner.nextInt();
+        scanner.nextLine();
         boolean achouInicial = false;
         for(int i = 0; i < numEstados; i++){
             Estado e = new Estado();
@@ -64,12 +65,15 @@ public class Principal {
             if(!achouInicial){
                 System.out.println("Estado é inicial? 1 - Sim, 2 - Não");
                 int r = scanner.nextInt();
+                scanner.nextLine();
                 if(r == 1){
                     automato.setEstadoInicial(e);
+                    achouInicial = true;
                 }
             }
             System.out.println("Estado é final? 1 - Sim, 2 - Não");
             int r = scanner.nextInt();
+            scanner.nextLine();
             if(r == 1){
                 automato.getEstadosFinais().inclui(e);
             }
@@ -84,8 +88,15 @@ public class Principal {
         String simbolos = scanner.nextLine();
         for(int i = 0; i < simbolos.length(); i++){
             Simbolo s = new Simbolo(simbolos.charAt(i));
+            System.out.println("O simbolo " + simbolos.charAt(i) + " foi adicionado");
             automato.getSimbolos().inclui(s);
         }
+
+        System.out.println("Estados eh");
+        System.out.println(automato.getEstados().toString());
+
+        System.out.println("Alfabeto eh ");
+        System.out.println(automato.getSimbolos().toString());
 
         System.out.println("Escreva as transições dessa forma: Origem Destino Simbolo, Ex: A B c");
         System.out.println("Para terminar de escrever transições, escreva \"ACABOU\"");
@@ -93,15 +104,30 @@ public class Principal {
         while(input != "ACABOU"){
             String[] parsed = input.split(" ");
             if(parsed.length != 3){
-                System.out.println("Algo deu errado, tente novamente");
+                System.out.println("Tamanho do parsed é diferente de 3, tente novamente");
+                System.out.println("Parsed eh: ");
+                for(String a : parsed){
+                    System.out.println(a);
+                }
+                input = scanner.nextLine();
                 continue;
             }
             try{
                 automato.adicionaTransicoes(parsed[0], parsed[1], parsed[2]);
             } catch (Exception e){
-                System.out.println("Algo deu errado, tente novamente");
+                System.out.println("Exception ao adicionar transição, tente novamente");
+                System.out.println(e.getMessage());
+                input = scanner.nextLine();
                 continue;
             }
+            input = scanner.nextLine();
+        }
+        System.out.println("Finalizado. Qual o nome do arquivo?");
+        String fileName = scanner.nextLine();
+        try{
+            automato.toXML(fileName);
+        } catch (Exception e) {
+            System.out.println("Deu algo errado. Tente novamente");
         }
     }
 
