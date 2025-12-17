@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,15 +20,89 @@ public class Principal {
         Principal t;
         try {
             t = new Principal();
-            t.inicio();
         } catch (Exception ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public Principal() throws Exception {
-        automato.ler("test/AFD1.XML");
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("Deseja criar ou fazer analise?");
+        System.out.println("1 - Criar automato");
+        System.out.println("2 - Fazer análise léxica");
+
+        int resposta = scanner.nextInt();
+        switch (resposta) {
+            case 1:
+                criarAutomato();
+                break;
+            case 2:
+                System.out.println("Digite o caminho para o XML:");
+                String afdString = scanner.nextLine();
+                automato.ler(afdString);
+                inicio();
+                break;
+            default:
+                break;
+        }
         //automato.toXML("test/novoXML");
+    }
+
+
+    public void criarAutomato(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Criando um AFD.\nQuantos estados tem seu automato?");
+        int numEstados = scanner.nextInt();
+        boolean achouInicial = false;
+        for(int i = 0; i < numEstados; i++){
+            Estado e = new Estado();
+            System.out.println("Digite o nome do estado " + (i + 1) + ":");
+            String nome = scanner.nextLine();
+            e.setNome(nome);
+            automato.getEstados().inclui(e);
+            if(!achouInicial){
+                System.out.println("Estado é inicial? 1 - Sim, 2 - Não");
+                int r = scanner.nextInt();
+                if(r == 1){
+                    automato.setEstadoInicial(e);
+                }
+            }
+            System.out.println("Estado é final? 1 - Sim, 2 - Não");
+            int r = scanner.nextInt();
+            if(r == 1){
+                automato.getEstadosFinais().inclui(e);
+            }
+        }
+        System.out.println("Quais os delimitadores? Escreva tudo junto, sem espaço");
+        String delimitador = scanner.nextLine();
+        for(int i = 0; i < delimitador.length(); i++){
+            Simbolo s = new Simbolo(delimitador.charAt(i));
+            automato.getDelimitador().inclui(s);
+        }
+        System.out.println("Quais os simbolos? Escreva tudo junto, sem espaço");
+        String simbolos = scanner.nextLine();
+        for(int i = 0; i < simbolos.length(); i++){
+            Simbolo s = new Simbolo(simbolos.charAt(i));
+            automato.getSimbolos().inclui(s);
+        }
+
+        System.out.println("Escreva as transições dessa forma: Origem Destino Simbolo, Ex: A B c");
+        System.out.println("Para terminar de escrever transições, escreva \"ACABOU\"");
+        String input = scanner.nextLine();
+        while(input != "ACABOU"){
+            String[] parsed = input.split(" ");
+            if(parsed.length != 3){
+                System.out.println("Algo deu errado, tente novamente");
+                continue;
+            }
+            try{
+                automato.adicionaTransicoes(parsed[0], parsed[1], parsed[2]);
+            } catch (Exception e){
+                System.out.println("Algo deu errado, tente novamente");
+                continue;
+            }
+        }
     }
 
     public void inicio() {

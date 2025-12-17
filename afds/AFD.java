@@ -261,7 +261,7 @@ public class AFD {
 
 
 
-	private void adicionaTransicoes(String origem, String destino, String simbolosStr)
+	public void adicionaTransicoes(String origem, String destino, String simbolosStr)
 			throws Exception {
 
 		List<Character> lista = expandirSimbolos(simbolosStr);
